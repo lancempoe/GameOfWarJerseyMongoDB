@@ -1,21 +1,17 @@
 package com.lancep.api;
 
+import org.apache.commons.lang3.StringUtils;
+
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
-import java.net.HttpURLConnection;
 
 @Path("/checkout")
-public class MarketResource {
+public class MarketResource extends Resouce {
     @GET
     @Produces(MediaType.TEXT_PLAIN)
     public String getBill(@QueryParam("productList") String productList) {
-        if (productList == null) {
-            throw new WebApplicationException(
-                Response.status(HttpURLConnection.HTTP_BAD_REQUEST)
-                        .entity("name parameter is mandatory")
-                        .build()
-            );
+        if (StringUtils.isEmpty(productList)) {
+            throwBadRequest("name parameter is mandatory");
         }
         return "Hello world!" + productList;
     }
