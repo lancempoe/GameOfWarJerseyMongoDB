@@ -1,18 +1,30 @@
 package com.lancep.api;
 
+import com.lancep.service.MarketService;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
-import javax.ws.rs.*;
+import javax.ws.rs.GET;
+import javax.ws.rs.Path;
+import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 
-@Path("/checkout")
+@Component
+@Path("market")
 public class MarketResource extends Resouce {
+
+    @Autowired
+    MarketService marketService;
+
+    @Path("checkout")
     @GET
     @Produces(MediaType.TEXT_PLAIN)
-    public String getBill(@QueryParam("productList") String productList) {
+    public String getInvoiceTotal(@QueryParam("productList") String productList) {
         if (StringUtils.isEmpty(productList)) {
-            throwBadRequest("name parameter is mandatory");
+            throwBadRequest("productList parameter is mandatory");
         }
-        return "Hello world!" + productList;
+        return marketService.getInvoiceTotal(productList);
     }
 }

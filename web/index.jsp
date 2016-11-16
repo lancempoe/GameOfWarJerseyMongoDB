@@ -4,6 +4,6 @@
     <title>Lance's API Playground</title>
   </head>
   <body>
-  /rest/*
+    Lance's API Playground: Checkout my apis at /api/*
   </body>
 </html>
