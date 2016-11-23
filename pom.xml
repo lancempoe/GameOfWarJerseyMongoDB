@@ -5,8 +5,8 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.lancep.api</groupId>
-    <artifactId>market</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <artifactId>war</artifactId>
+    <version>1.0</version>
 
     <properties>
         <spring.version>4.0.3.RELEASE</spring.version>
@@ -14,6 +14,8 @@
         <apache.commons.lang3>3.5</apache.commons.lang3>
         <junit.version>4.10</junit.version>
         <mockito.version>2.2.11</mockito.version>
+        <mongo-java.version>2.11.1</mongo-java.version>
+        <spring-mongo.version>1.2.1.RELEASE</spring-mongo.version>
     </properties>
 
     <dependencies>
@@ -77,6 +79,20 @@
             <version>${spring.version}</version>
         </dependency>
 
+        <!-- Spring Data for MongoDB -->
+        <dependency>
+            <groupId>org.springframework.data</groupId>
+            <artifactId>spring-data-mongodb</artifactId>
+            <version>${spring-mongo.version}</version>
+        </dependency>
+
+        <!-- Java MongoDB Driver -->
+        <dependency>
+            <groupId>org.mongodb</groupId>
+            <artifactId>mongo-java-driver</artifactId>
+            <version>${mongo-java.version}</version>
+        </dependency>
+
         <dependency>
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-lang3</artifactId>
@@ -99,5 +115,17 @@
 
 
     </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <source>1.8</source>
+                    <target>1.8</target>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
     
 </project>

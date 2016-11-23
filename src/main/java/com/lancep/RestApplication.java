@@ -1,14 +1,14 @@
 package com.lancep;
 
-import com.lancep.controller.HealthController;
-import com.lancep.controller.MarketController;
+import com.lancep.controller.HealthResource;
+import com.lancep.controller.game.GameResource;
 import org.glassfish.jersey.server.ResourceConfig;
 
 public class RestApplication extends ResourceConfig {
 
     public RestApplication() {
         // register application resources
-        register(MarketController.class);
-        register(HealthController.class);
+        register(HealthResource.class);
+        register(GameResource.class);
     }
 }

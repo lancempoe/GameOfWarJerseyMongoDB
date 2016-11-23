@@ -9,7 +9,7 @@ import javax.ws.rs.core.Response;
 
 @Component
 @Path("health")
-public class HealthController {
+public class HealthResource {
 
     @GET
     public Response amIAwake() {
