@@ -5,7 +5,6 @@ import com.lancep.utils.Card;
 
 import java.util.ArrayDeque;
 import java.util.Collections;
-import java.util.Deque;
 import java.util.List;
 
 public class WarFactory {
@@ -21,8 +20,8 @@ public class WarFactory {
         return war;
     }
 
-    private static Deque<Card> getShuffledDeck(List<Card> cards) {
-        Deque<Card> drawStack = new ArrayDeque<>(cards.size());
+    private static ArrayDeque<Card> getShuffledDeck(List<Card> cards) {
+        ArrayDeque<Card> drawStack = new ArrayDeque<>(cards.size());
 
         Collections.shuffle(cards);
         cards.stream().forEach(card -> drawStack.addLast(card));

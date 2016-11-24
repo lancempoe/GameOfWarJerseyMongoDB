@@ -100,7 +100,6 @@
         </dependency>
 
         <!--Testing libraries-->
-        <!--Testing libraries-->
         <dependency>
             <groupId>org.jmockit</groupId>
             <artifactId>jmockit</artifactId>
@@ -113,7 +112,6 @@
             <version>${junit.version}</version>
             <scope>test</scope>
         </dependency>
-
     </dependencies>
 
     <build>
