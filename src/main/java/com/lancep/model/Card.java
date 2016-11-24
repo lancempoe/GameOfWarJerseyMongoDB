@@ -1,23 +1,23 @@
 package com.lancep.model;
 
-import com.lancep.utils.Number;
-import com.lancep.utils.Suits;
+import com.lancep.utils.CardNumber;
+import com.lancep.utils.CardSuit;
 
 public class Card {
 
-    private Suits suit;
-    private Number number;
+    private CardSuit cardSuit;
+    private CardNumber cardNumber;
 
-    public Card(Suits suit, Number number) {
-        this.suit = suit;
-        this.number = number;
+    public Card(CardSuit cardSuit, CardNumber cardNumber) {
+        this.cardSuit = cardSuit;
+        this.cardNumber = cardNumber;
     }
 
-    public Suits getSuit() {
-        return suit;
+    public CardSuit getCardSuit() {
+        return cardSuit;
     }
 
-    public Number getNumber() {
-        return number;
+    public CardNumber getCardNumber() {
+        return cardNumber;
     }
 }
