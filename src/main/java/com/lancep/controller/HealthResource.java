@@ -13,7 +13,7 @@ public class HealthResource {
 
     @GET
     public Response amIAwake() {
-        return Response.ok("API is up and running!", MediaType.TEXT_PLAIN).build();
+        return Response.ok("Salud! Let the games begin.", MediaType.TEXT_PLAIN).build();
     }
 
 }

@@ -2,14 +2,15 @@ package com.lancep.service;
 
 
 import com.lancep.config.MongoDBConfig;
+import com.lancep.errorhandling.WarException;
 import com.lancep.factory.WarFactory;
 import com.lancep.model.War;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoOperations;
 import org.springframework.stereotype.Component;
 
-import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.Response;
+import java.util.List;
 import java.util.logging.Logger;
 
 @Component
@@ -19,6 +20,10 @@ public class GameService {
 
     @Autowired
     private MongoDBConfig mongoConfig;
+
+    public List<War> getWarGames() {
+        throw new WarException(Response.Status.FORBIDDEN);
+    }
 
     public String createWarGame() {
 
@@ -33,8 +38,7 @@ public class GameService {
             return war.getId();
 
         } catch (Exception e) {
-            throw new WebApplicationException(Response.Status.GATEWAY_TIMEOUT);
+            throw new WarException(Response.Status.GATEWAY_TIMEOUT);
         }
-
     }
 }
