@@ -48,7 +48,7 @@ public class WarResourceTest {
 
     @Test
     public void getWarGamesRespondsWithTypeJson() throws Exception {
-        assertThat(subject.getWarGames().getMediaType().toString(), is(MediaType.APPLICATION_JSON));
+        assertThat(subject.getWarGames().getMediaType(), is(MediaType.APPLICATION_JSON_TYPE));
     }
 
     @Test
