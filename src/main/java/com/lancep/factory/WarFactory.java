@@ -1,9 +1,7 @@
 package com.lancep.factory;
 
-import com.lancep.model.Card;
 import com.lancep.model.War;
-import com.lancep.utils.CardNumber;
-import com.lancep.utils.CardSuit;
+import com.lancep.utils.Card;
 
 import java.util.ArrayDeque;
 import java.util.Collections;
@@ -15,23 +13,20 @@ public class WarFactory {
     public static War createWar() {
         War war = new War();
 
-        List<CardNumber> numbers = CardNumber.valuesAsList();
-        List<CardSuit> suits = CardSuit.valuesAsList();
+        List<Card> cards = Card.valuesAsList();
 
-        war.setPlayer1DrawStack(getShuffledDeck(numbers, suits));
-        war.setPlayer2DrawStack(getShuffledDeck(numbers, suits));
+        war.setPlayer1DrawStack(getShuffledDeck(cards));
+        war.setPlayer2DrawStack(getShuffledDeck(cards));
 
         return war;
     }
 
-    private static Deque<Card> getShuffledDeck(List<CardNumber> numbers, List<CardSuit> suits) {
+    private static Deque<Card> getShuffledDeck(List<Card> cards) {
         Deque<Card> drawStack = new ArrayDeque<>();
-        Collections.shuffle(numbers);
-        Collections.shuffle(suits);
-        suits.stream().forEach(suit -> numbers.stream().forEach(number -> {
-            Card card = new Card(suit, number);
-            drawStack.addLast(card);
-        }));
+
+        Collections.shuffle(cards);
+        cards.stream().forEach(card -> drawStack.addLast(card));
+
         return drawStack;
     }
 }
