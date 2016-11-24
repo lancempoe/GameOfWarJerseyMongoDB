@@ -22,7 +22,7 @@ public class WarFactory {
     }
 
     private static Deque<Card> getShuffledDeck(List<Card> cards) {
-        Deque<Card> drawStack = new ArrayDeque<>();
+        Deque<Card> drawStack = new ArrayDeque<>(cards.size());
 
         Collections.shuffle(cards);
         cards.stream().forEach(card -> drawStack.addLast(card));

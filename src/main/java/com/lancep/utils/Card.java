@@ -5,7 +5,6 @@ import java.util.List;
 
 public enum Card {
     HEART_ACE,
-    HEART_ONE,
     HEART_TWO,
     HEART_THREE,
     HEART_FOUR,
@@ -19,7 +18,6 @@ public enum Card {
     HEART_QUEEN,
     HEART_KING,
     DIAMOND_ACE,
-    DIAMOND_ONE,
     DIAMOND_TWO,
     DIAMOND_THREE,
     DIAMOND_FOUR,
@@ -33,7 +31,6 @@ public enum Card {
     DIAMOND_QUEEN,
     DIAMOND_KING,
     SPADE_ACE,
-    SPADE_ONE,
     SPADE_TWO,
     SPADE_THREE,
     SPADE_FOUR,
@@ -47,7 +44,6 @@ public enum Card {
     SPADE_QUEEN,
     SPADE_KING,
     CLUB_ACE,
-    CLUB_ONE,
     CLUB_TWO,
     CLUB_THREE,
     CLUB_FOUR,
