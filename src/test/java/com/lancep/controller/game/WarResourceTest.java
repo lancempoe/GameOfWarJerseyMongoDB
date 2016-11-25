@@ -24,7 +24,8 @@ import static org.junit.Assert.assertThat;
 
 public class WarResourceTest {
 
-    @Tested WarResource subject;
+    @Tested
+    WarResource subject;
     @Injectable GameService gameService;
     @Injectable PropertiesDelegate propertiesDelegate;
     @Injectable SecurityContext securityContext;

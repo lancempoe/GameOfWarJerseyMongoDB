@@ -10,7 +10,8 @@ import static org.junit.Assert.assertThat;
 public class GameResourceTest {
 
     @Tested GameResource subject;
-    @Injectable WarResource warResource;
+    @Injectable
+    WarResource warResource;
 
     @Test
     public void getWarResource() throws Exception {
