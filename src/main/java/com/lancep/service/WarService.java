@@ -14,9 +14,9 @@ import java.util.List;
 import java.util.logging.Logger;
 
 @Component
-public class GameService {
+public class WarService {
 
-    private static final Logger logger = Logger.getLogger( GameService.class.getName() );
+    private static final Logger logger = Logger.getLogger( WarService.class.getName() );
 
     @Autowired
     private MongoDBConfig mongoConfig;

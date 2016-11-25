@@ -1,7 +1,7 @@
 package com.lancep.controller.game;
 
 import com.lancep.model.War;
-import com.lancep.service.GameService;
+import com.lancep.service.WarService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -14,7 +14,7 @@ import java.util.List;
 public class WarResource {
 
     @Autowired
-    private GameService gameService;
+    private WarService warService;
 
     @Context
     private ResourceContext resourceContext;
@@ -22,7 +22,7 @@ public class WarResource {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public Response getWarGames() {
-        List<War> wars = gameService.getWarGames();
+        List<War> wars = warService.getWarGames();
         return Response
                 .ok(wars)
                 .type(MediaType.APPLICATION_JSON)
@@ -31,7 +31,7 @@ public class WarResource {
 
     @POST
     public Response createWarGame(@Context UriInfo uriInfo) {
-        String id = gameService.createWarGame();
+        String id = warService.createWarGame();
         UriBuilder builder = uriInfo.getAbsolutePathBuilder();
         builder.path(id);
         return Response
@@ -43,7 +43,7 @@ public class WarResource {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public Response getWar(@PathParam("id") String id) {
-        War war = gameService.getWarGame(id);
+        War war = warService.getWarGame(id);
         return Response
                 .ok(war)
                 .type(MediaType.APPLICATION_JSON)
@@ -54,7 +54,7 @@ public class WarResource {
     @Path("{id}")
     @DELETE
     public Response deleteWar(@PathParam("id") String id) {
-        gameService.deleteWarGame(id);
+        warService.deleteWarGame(id);
         return Response
                 .ok()
                 .entity(String.format("Removed game of war: %s", id))

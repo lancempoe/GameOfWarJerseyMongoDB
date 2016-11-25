@@ -1,7 +1,7 @@
 package com.lancep.controller.game;
 
 import com.lancep.model.War;
-import com.lancep.service.GameService;
+import com.lancep.service.WarService;
 import mockit.Expectations;
 import mockit.Injectable;
 import mockit.Tested;
@@ -26,7 +26,8 @@ public class WarResourceTest {
 
     @Tested
     WarResource subject;
-    @Injectable GameService gameService;
+    @Injectable
+    WarService warService;
     @Injectable PropertiesDelegate propertiesDelegate;
     @Injectable SecurityContext securityContext;
 
@@ -42,7 +43,7 @@ public class WarResourceTest {
     @Test
     public void getWarGamesRespondsWithWarGames() throws Exception {
         new Expectations() {{
-            gameService.getWarGames(); result = wars;
+            warService.getWarGames(); result = wars;
         }};
         assertThat(subject.getWarGames().getEntity(), is(wars));
     }
@@ -55,7 +56,7 @@ public class WarResourceTest {
     @Test
     public void createWarGameRespondsCreated() throws URISyntaxException {
         new Expectations() {{
-            gameService.createWarGame(); result = WAR_ID;
+            warService.createWarGame(); result = WAR_ID;
         }};
 
         UriInfo uriInfo = getUriInfo();
@@ -65,7 +66,7 @@ public class WarResourceTest {
     @Test
     public void createWarGameReturnsUrl() throws Exception {
         new Expectations() {{
-            gameService.createWarGame(); result = WAR_ID;
+            warService.createWarGame(); result = WAR_ID;
         }};
 
         UriInfo uriInfo = getUriInfo();

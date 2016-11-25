@@ -16,8 +16,9 @@ import java.util.List;
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
 
-public class GameServiceTest {
-    @Tested GameService subject;
+public class WarServiceTest {
+    @Tested
+    WarService subject;
     @Injectable MongoDBConfig mongoDBConfig;
     @Injectable MongoTemplate mongoTemplate;
 
