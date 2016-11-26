@@ -1,4 +1,4 @@
-package com.lancep.errorhandling;
+package com.lancep.war.errorhandling;
 
 import org.junit.Test;
 

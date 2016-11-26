@@ -1,6 +1,6 @@
 package com.lancep.controller.game;
 
-import com.lancep.model.War;
+import com.lancep.war.orm.War;
 import com.lancep.service.WarService;
 import mockit.Expectations;
 import mockit.Injectable;
@@ -56,7 +56,7 @@ public class WarResourceTest {
     @Test
     public void createWarGameRespondsCreated() throws URISyntaxException {
         new Expectations() {{
-            warService.createWarGame(); result = WAR_ID;
+            warService.createWarGame(anyInt, anyInt); result = WAR_ID;
         }};
 
         UriInfo uriInfo = getUriInfo();
@@ -66,7 +66,7 @@ public class WarResourceTest {
     @Test
     public void createWarGameReturnsUrl() throws Exception {
         new Expectations() {{
-            warService.createWarGame(); result = WAR_ID;
+            warService.createWarGame(anyInt, anyInt); result = WAR_ID;
         }};
 
         UriInfo uriInfo = getUriInfo();

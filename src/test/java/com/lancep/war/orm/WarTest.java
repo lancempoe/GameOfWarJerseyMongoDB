@@ -1,9 +1,8 @@
-package com.lancep.model;
+package com.lancep.war.orm;
 
-import com.lancep.utils.Card;
+import com.lancep.war.domain.WarDeck;
+import com.lancep.war.domain.WarDeckImpl;
 import org.junit.Test;
-
-import java.util.ArrayDeque;
 
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
@@ -21,16 +20,16 @@ public class WarTest {
 
     @Test
     public void getPlayer1DrawStack() throws Exception {
-        ArrayDeque<Card> deque = new ArrayDeque<>();
-        subject.setPlayer1DrawStack(deque);
-        assertThat(subject.getPlayer1DrawStack(), is(deque));
+        WarDeck deck = new WarDeckImpl(0,0);
+        subject.setPlayer1Deck(deck);
+        assertThat(subject.getPlayer1Deck(), is(deck));
     }
 
     @Test
     public void getPlayer2DrawStack() throws Exception {
-        ArrayDeque<Card> deque = new ArrayDeque<>();
-        subject.setPlayer2DrawStack(deque);
-        assertThat(subject.getPlayer2DrawStack(), is(deque));
+        WarDeck deck = new WarDeckImpl(0,0);
+        subject.setPlayer2Deck(deck);
+        assertThat(subject.getPlayer2Deck(), is(deck));
     }
 
 }

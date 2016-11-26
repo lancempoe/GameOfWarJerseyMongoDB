@@ -2,7 +2,7 @@ package com.lancep;
 
 import com.lancep.controller.HealthResource;
 import com.lancep.controller.game.GameResource;
-import com.lancep.errorhandling.WarExceptionMapper;
+import com.lancep.war.errorhandling.WarExceptionMapper;
 import org.glassfish.jersey.server.ResourceConfig;
 
 public class RestApplication extends ResourceConfig {

@@ -1,23 +1,21 @@
 package com.lancep.controller.game;
 
-import com.lancep.model.War;
+import com.lancep.war.orm.War;
 import com.lancep.service.WarService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import javax.ws.rs.*;
-import javax.ws.rs.container.ResourceContext;
 import javax.ws.rs.core.*;
 import java.util.List;
 
 @Component
 public class WarResource {
 
-    @Autowired
-    private WarService warService;
+    @Autowired private WarService warService;
 
-    @Context
-    private ResourceContext resourceContext;
+    private static final int NUMBER_OF_RANK = 13;
+    private static final int NUMBER_OF_SUITS = 4;
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
@@ -31,7 +29,7 @@ public class WarResource {
 
     @POST
     public Response createWarGame(@Context UriInfo uriInfo) {
-        String id = warService.createWarGame();
+        String id = warService.createWarGame(NUMBER_OF_SUITS, NUMBER_OF_RANK);
         UriBuilder builder = uriInfo.getAbsolutePathBuilder();
         builder.path(id);
         return Response

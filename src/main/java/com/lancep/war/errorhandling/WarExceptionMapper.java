@@ -1,4 +1,4 @@
-package com.lancep.errorhandling;
+package com.lancep.war.errorhandling;
 
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;

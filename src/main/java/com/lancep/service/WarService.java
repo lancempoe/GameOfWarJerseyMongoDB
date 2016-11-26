@@ -2,9 +2,9 @@ package com.lancep.service;
 
 
 import com.lancep.config.MongoDBConfig;
-import com.lancep.errorhandling.WarException;
-import com.lancep.factory.WarFactory;
-import com.lancep.model.War;
+import com.lancep.war.errorhandling.WarException;
+import com.lancep.war.factory.WarFactory;
+import com.lancep.war.orm.War;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoOperations;
 import org.springframework.stereotype.Component;
@@ -30,12 +30,12 @@ public class WarService {
         }
     }
 
-    public String createWarGame() {
+    public String createWarGame(int numberOfSuits, int numberOfRank) {
 
         try {
             MongoOperations mongoOperation = mongoConfig.mongoTemplate();
 
-            War war = WarFactory.createWar();
+            War war = WarFactory.createWar(numberOfSuits, numberOfRank);
             mongoOperation.save(war);
 
             logger.info(String.format("New War Created: %s", war.getId()));
@@ -55,7 +55,7 @@ public class WarService {
             throw new WarException(Response.Status.GATEWAY_TIMEOUT);
         }
         if (war == null) {
-            new WarException(Response.Status.BAD_REQUEST);
+            throw new WarException(Response.Status.BAD_REQUEST);
         }
         return war;
     }
