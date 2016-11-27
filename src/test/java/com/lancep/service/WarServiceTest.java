@@ -1,7 +1,9 @@
 package com.lancep.service;
 
 import com.lancep.config.MongoDBConfig;
+import com.lancep.war.client.WarResults;
 import com.lancep.war.errorhandling.WarException;
+import com.lancep.war.factory.WarFactory;
 import com.lancep.war.orm.War;
 import mockit.Expectations;
 import mockit.Injectable;
@@ -14,6 +16,7 @@ import org.springframework.data.mongodb.core.MongoTemplate;
 import java.util.ArrayList;
 import java.util.List;
 
+import static org.hamcrest.Matchers.greaterThan;
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
 
@@ -25,7 +28,7 @@ public class WarServiceTest {
     @Injectable MongoDBConfig mongoDBConfig;
     @Injectable MongoTemplate mongoOperation;
 
-    public static final War WAR = new War();
+    public static final War WAR = WarFactory.createWar(1,1);
     public static final String ID = "123";
     public static final List<War> WARS = new ArrayList<>();
 
@@ -40,7 +43,7 @@ public class WarServiceTest {
 
     @Test
     public void deleteWarGameCallsDelete() throws Exception {
-        subject.deleteWarGame(ID);
+        subject.delete(ID);
         new Verifications() {{
             mongoOperation.remove(withAny(War.class));
         }};
@@ -51,7 +54,7 @@ public class WarServiceTest {
         new Expectations() {{
             mongoOperation.findById(ID, War.class); result = null;
         }};
-        subject.deleteWarGame(ID);
+        subject.delete(ID);
     }
 
     @Test(expected = WarException.class)
@@ -60,12 +63,41 @@ public class WarServiceTest {
             mongoDBConfig.mongoTemplate(); result = new Exception();
         }};
         String id = "1";
-        subject.deleteWarGame(id);
+        subject.delete(id);
     }
 
     @Test
     public void getWarGameReturnsAGame() throws Exception {
-        assertThat(subject.getWarGame(ID), is(WAR));
+        assertThat(subject.get(ID), is(WAR));
+    }
+    
+    @Test
+    public void drawWillReturnWith1MoreMoveCount() {
+        int initialCount = WAR.getTotalMoveCount();
+        WarResults results = subject.draw(ID);
+        assertThat(results.getTotalMoveCount(), is(initialCount + 1));
+    }
+
+    @Test(expected = WarException.class)
+    public void drawHandlesInvalidId() {
+        new Expectations() {{
+            mongoOperation.findById(ID, War.class); result = null;
+        }};
+        subject.draw(ID);
+    }
+
+    @Test(expected = WarException.class)
+    public void drawThrowsErrorWhenMongoError() throws Exception {
+        new Expectations() {{
+            mongoDBConfig.mongoTemplate(); result = new Exception();
+        }};
+        subject.draw(ID);
+    }
+
+    @Test
+    public void playWillReturnResults() {
+        WarResults results = subject.play(1,1);
+        assertThat(results.getTotalMoveCount(), is(greaterThan(0)));
     }
 
     @Test(expected = WarException.class)
@@ -73,7 +105,7 @@ public class WarServiceTest {
         new Expectations() {{
             mongoDBConfig.mongoTemplate(); result = new Exception();
         }};
-        subject.getWarGame(ID);
+        subject.get(ID);
     }
 
     @Test(expected = WarException.class)
@@ -81,12 +113,12 @@ public class WarServiceTest {
         new Expectations() {{
             mongoOperation.findById(ID, War.class); result = null;
         }};
-        subject.getWarGame(ID);
+        subject.get(ID);
     }
 
     @Test
     public void getWarGamesReturnsListOfGames() throws Exception {
-        assertThat(subject.getWarGames(), is(WARS));
+        assertThat(subject.getAll(), is(WARS));
     }
 
     @Test(expected = WarException.class)
@@ -94,12 +126,12 @@ public class WarServiceTest {
         new Expectations() {{
             mongoDBConfig.mongoTemplate(); result = new Exception();
         }};
-        subject.getWarGames();
+        subject.getAll();
     }
 
     @Test
     public void willSaveWarToDb() throws Exception {
-        subject.createWarGame(NUMBER_OF_SUITS, NUMBER_OF_RANK);
+        subject.create(NUMBER_OF_SUITS, NUMBER_OF_RANK);
 
         new Verifications() {{
             mongoOperation.save(withAny(War.class));
@@ -111,7 +143,7 @@ public class WarServiceTest {
         new Expectations() {{
             mongoDBConfig.mongoTemplate(); result = new Exception();
         }};
-        subject.createWarGame(NUMBER_OF_SUITS,NUMBER_OF_RANK);
+        subject.create(NUMBER_OF_SUITS,NUMBER_OF_RANK);
     }
 
 }

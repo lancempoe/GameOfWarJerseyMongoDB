@@ -1,7 +1,8 @@
 package com.lancep.controller.game;
 
-import com.lancep.war.orm.War;
 import com.lancep.service.WarService;
+import com.lancep.war.client.WarResults;
+import com.lancep.war.orm.War;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -9,18 +10,17 @@ import javax.ws.rs.*;
 import javax.ws.rs.core.*;
 import java.util.List;
 
+import static com.lancep.controller.validation.WarValidations.hasValidPlayParams;
+
 @Component
 public class WarResource {
 
     @Autowired private WarService warService;
 
-    private static final int NUMBER_OF_RANK = 13;
-    private static final int NUMBER_OF_SUITS = 4;
-
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public Response getWarGames() {
-        List<War> wars = warService.getWarGames();
+        List<War> wars = warService.getAll();
         return Response
                 .ok(wars)
                 .type(MediaType.APPLICATION_JSON)
@@ -28,8 +28,11 @@ public class WarResource {
     }
 
     @POST
-    public Response createWarGame(@Context UriInfo uriInfo) {
-        String id = warService.createWarGame(NUMBER_OF_SUITS, NUMBER_OF_RANK);
+    public Response createWarGame(@Context UriInfo uriInfo,
+                                  @QueryParam("numberOfSuits") int numberOfSuits,
+                                  @QueryParam("numberOfRank") int numberOfRank) {
+        hasValidPlayParams(numberOfSuits, numberOfRank);
+        String id = warService.create(numberOfSuits, numberOfRank);
         UriBuilder builder = uriInfo.getAbsolutePathBuilder();
         builder.path(id);
         return Response
@@ -37,25 +40,49 @@ public class WarResource {
                 .build();
     }
 
+    @Path("play")
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response quickGame(
+            @QueryParam("numberOfSuits") int numberOfSuits,
+            @QueryParam("numberOfRanks") int numberOfRanks) {
+        hasValidPlayParams(numberOfSuits, numberOfRanks);
+        WarResults warResults = warService.play(numberOfSuits, numberOfRanks);
+        return Response
+                .ok(warResults)
+                .type(MediaType.APPLICATION_JSON)
+                .build();
+    }
+
     @Path("{id}")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public Response getWar(@PathParam("id") String id) {
-        War war = warService.getWarGame(id);
+        War war = warService.get(id);
         return Response
                 .ok(war)
                 .type(MediaType.APPLICATION_JSON)
                 .build();
     }
 
-
     @Path("{id}")
     @DELETE
     public Response deleteWar(@PathParam("id") String id) {
-        warService.deleteWarGame(id);
+        warService.delete(id);
         return Response
                 .ok()
                 .entity(String.format("Removed game of war: %s", id))
+                .build();
+    }
+
+    @Path("{id}/draw")
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response draw(@PathParam("id") String id) {
+        WarResults warResults = warService.draw(id);
+        return Response
+                .ok(warResults)
+                .type(MediaType.APPLICATION_JSON)
                 .build();
     }
 

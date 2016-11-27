@@ -45,4 +45,11 @@ public class WarResultsTest {
         assertThat(subject.getPlayer2DeckSize(), is(deckSize));
     }
 
+    @Test
+    public void canGetId() {
+        String id = "2345d";
+        subject.setId(id);
+        assertThat(subject.getId(), is(id));
+    }
+
 }

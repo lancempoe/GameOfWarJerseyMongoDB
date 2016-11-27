@@ -33,6 +33,9 @@ public class WarResourceTest {
 
     public static final String BASE_URL = "www.chroniclesofprydain.com";
     public static final String WAR_ID = "1234";
+    private static final int NUMBER_OF_RANK = 1;
+    private static final int NUMBER_OF_SUITS = 1;
+
     private List<War> wars = new ArrayList();
 
     @Test
@@ -43,7 +46,7 @@ public class WarResourceTest {
     @Test
     public void getWarGamesRespondsWithWarGames() throws Exception {
         new Expectations() {{
-            warService.getWarGames(); result = wars;
+            warService.getAll(); result = wars;
         }};
         assertThat(subject.getWarGames().getEntity(), is(wars));
     }
@@ -56,21 +59,36 @@ public class WarResourceTest {
     @Test
     public void createWarGameRespondsCreated() throws URISyntaxException {
         new Expectations() {{
-            warService.createWarGame(anyInt, anyInt); result = WAR_ID;
+            warService.create(anyInt, anyInt); result = WAR_ID;
         }};
 
         UriInfo uriInfo = getUriInfo();
-        assertThat(subject.createWarGame(uriInfo).getStatusInfo(), is(Response.Status.CREATED));
+        assertThat(subject.createWarGame(uriInfo, NUMBER_OF_SUITS, NUMBER_OF_RANK).getStatusInfo(), is(Response.Status.CREATED));
     }
 
     @Test
     public void createWarGameReturnsUrl() throws Exception {
         new Expectations() {{
-            warService.createWarGame(anyInt, anyInt); result = WAR_ID;
+            warService.create(anyInt, anyInt); result = WAR_ID;
         }};
 
         UriInfo uriInfo = getUriInfo();
-        assertThat(subject.createWarGame(uriInfo).getLocation().getPath(), is(String.format("%s/%s", BASE_URL, WAR_ID)));
+        assertThat(subject.createWarGame(uriInfo, NUMBER_OF_SUITS, NUMBER_OF_RANK).getLocation().getPath(), is(String.format("%s/%s", BASE_URL, WAR_ID)));
+    }
+
+    @Test
+    public void playReturnsOk() {
+        assertThat(subject.quickGame(1,1).getStatusInfo(), is(Response.Status.OK));
+    }
+
+    @Test
+    public void deleteReturnsOk() {
+        assertThat(subject.deleteWar("1").getStatusInfo(), is(Response.Status.OK));
+    }
+
+    @Test
+    public void deleteturnsOk() {
+        assertThat(subject.deleteWar("12").getStatusInfo(), is(Response.Status.OK));
     }
 
     private UriInfo getUriInfo() throws URISyntaxException {

@@ -3,9 +3,11 @@ package com.lancep.war.driver;
 import com.lancep.war.client.WarResults;
 import com.lancep.war.domain.Card;
 import com.lancep.war.domain.WarDeck;
+import com.lancep.war.errorhandling.WarException;
 import com.lancep.war.factory.WarFactory;
 import com.lancep.war.orm.War;
 
+import javax.ws.rs.core.Response;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
@@ -15,9 +17,12 @@ public class WarDriver {
 
     private static final Logger logger = Logger.getLogger(WarDriver.class.getName());
     public static final int I_DECLARE_WAR_COUNT = 3;
+    public static final int MAX_MOVE_COUNT = 10000;
 
     /**
-     * This will play through an entire game of war
+     * @warning This will play through an entire game of war. As with the game of war,
+     * be careful what params you pass in because this could be a never ending game.
+     *
      * @return results of game of war
      */
     public WarResults play(int numberOfSuits, int numberOfRanks) {
@@ -35,7 +40,8 @@ public class WarDriver {
                     war.getTotalMoveCount()));
         }
 
-        return getWarResults(war);
+        WarResults results = new WarResults();
+        return getWarResults(war, results);
     }
 
     /**
@@ -58,10 +64,7 @@ public class WarDriver {
                     war.getTotalMoveCount()));
         }
 
-        results.setPlayer1DeckSize(war.getPlayer1Deck().getSize());
-        results.setPlayer2DeckSize(war.getPlayer2Deck().getSize());
-        results.setTotalMoveCount(war.getTotalMoveCount());
-        return results;
+        return getWarResults(war, results);
     }
 
     private void draw(War war, WarResults results) {
@@ -87,6 +90,9 @@ public class WarDriver {
     }
 
     private boolean gameIsNotOver(War war) {
+        if (war.getTotalMoveCount() > MAX_MOVE_COUNT) {
+            throw new WarException(Response.Status.REQUEST_TIMEOUT, "Game of war took took long. Most likely cause was a never ending loop of war.");
+        }
         return war.getPlayer1Deck().getSize() > 0 && war.getPlayer2Deck().getSize() > 0;
     }
 
@@ -115,10 +121,10 @@ public class WarDriver {
         }
 
         if (player1wins) {
-            logger.info(String.format("Player 1 wins %d cards in round", numberOfCards));
+            logger.info(String.format("Player 1 wins %d cards", numberOfCards));
             return war.getPlayer1Deck();
         } else {
-            logger.info(String.format("Player 2 wins %d cards in round", numberOfCards));
+            logger.info(String.format("Player 2 wins %d cards", numberOfCards));
             return war.getPlayer2Deck();
         }
     }
@@ -160,12 +166,12 @@ public class WarDriver {
         return results.getPlayer1DrawnCards().size() == results.getPlayer2DrawnCards().size();
     }
 
-    private WarResults getWarResults(War war) {
-        WarResults warResults = new WarResults();
-        warResults.setTotalMoveCount(war.getTotalMoveCount());
-        warResults.setPlayer1DeckSize(war.getPlayer1Deck().getSize());
-        warResults.setPlayer2DeckSize(war.getPlayer2Deck().getSize());
-        return warResults;
+    private WarResults getWarResults(War war, WarResults results) {
+        results.setId(war.getId());
+        results.setTotalMoveCount(war.getTotalMoveCount());
+        results.setPlayer1DeckSize(war.getPlayer1Deck().getSize());
+        results.setPlayer2DeckSize(war.getPlayer2Deck().getSize());
+        return results;
     }
 
     private void incrementTotalMoveCount(War war) {

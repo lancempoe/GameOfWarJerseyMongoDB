@@ -2,6 +2,8 @@ package com.lancep.service;
 
 
 import com.lancep.config.MongoDBConfig;
+import com.lancep.war.client.WarResults;
+import com.lancep.war.driver.WarDriver;
 import com.lancep.war.errorhandling.WarException;
 import com.lancep.war.factory.WarFactory;
 import com.lancep.war.orm.War;
@@ -21,7 +23,7 @@ public class WarService {
     @Autowired
     private MongoDBConfig mongoConfig;
 
-    public List<War> getWarGames() {
+    public List<War> getAll() {
         try {
             MongoOperations mongoOperation = mongoConfig.mongoTemplate();
             return mongoOperation.findAll(War.class);
@@ -30,7 +32,7 @@ public class WarService {
         }
     }
 
-    public String createWarGame(int numberOfSuits, int numberOfRank) {
+    public String create(int numberOfSuits, int numberOfRank) {
 
         try {
             MongoOperations mongoOperation = mongoConfig.mongoTemplate();
@@ -46,7 +48,7 @@ public class WarService {
         }
     }
 
-    public War getWarGame(String id) {
+    public War get(String id) {
         War war;
         try {
             MongoOperations mongoOperation = mongoConfig.mongoTemplate();
@@ -60,7 +62,7 @@ public class WarService {
         return war;
     }
 
-    public void deleteWarGame(String id) {
+    public void delete(String id) {
         War war;
         MongoOperations mongoOperation;
         try {
@@ -73,5 +75,36 @@ public class WarService {
             throw new WarException(Response.Status.BAD_REQUEST);
         }
         mongoOperation.remove(war);
+    }
+
+    public WarResults draw(String id) {
+        War war;
+        WarResults results;
+        try {
+            MongoOperations mongoOperation = mongoConfig.mongoTemplate();
+            war = mongoOperation.findById(id, War.class);
+
+            WarDriver driver = new WarDriver();
+            results = driver.draw(war);
+
+            mongoOperation.save(war);
+        } catch (Exception e) {
+            throw new WarException(Response.Status.GATEWAY_TIMEOUT);
+        }
+        if (war == null) {
+            throw new WarException(Response.Status.BAD_REQUEST);
+        }
+        return results;
+    }
+
+    public WarResults play(int numberOfSuits, int numberOfRanks) {
+        WarDriver driver = new WarDriver();
+        WarResults results;
+        try {
+            results = driver.play(numberOfSuits, numberOfRanks);
+        } catch (Exception e) {
+            throw new WarException(Response.Status.GATEWAY_TIMEOUT);
+        }
+        return results;
     }
 }

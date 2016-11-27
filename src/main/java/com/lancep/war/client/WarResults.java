@@ -6,11 +6,20 @@ import java.util.ArrayDeque;
 
 public class WarResults {
 
+    private String id;
     private int totalMoveCount;
     private ArrayDeque<Card> player1DrawnCards = new ArrayDeque<>();
     private ArrayDeque<Card> player2DrawnCards = new ArrayDeque<>();
     private int player1DeckSize;
     private int player2DeckSize;
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
 
     public int getTotalMoveCount() {
         return totalMoveCount;
