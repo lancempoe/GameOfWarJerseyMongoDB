@@ -1,9 +1,9 @@
 package com.lancep.war.driver;
 
 import com.lancep.war.client.WarResults;
-import com.lancep.war.domain.Card;
-import com.lancep.war.domain.WarDeck;
-import com.lancep.war.domain.WarDeckImpl;
+import com.lancep.war.orm.Card;
+import com.lancep.war.orm.WarDeck;
+import com.lancep.war.orm.WarDeckImpl;
 import com.lancep.war.orm.War;
 import org.junit.Test;
 

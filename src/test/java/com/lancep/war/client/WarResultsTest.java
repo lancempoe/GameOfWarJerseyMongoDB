@@ -1,6 +1,6 @@
 package com.lancep.war.client;
 
-import com.lancep.war.domain.Card;
+import com.lancep.war.orm.Card;
 import org.junit.Test;
 
 import static org.hamcrest.core.Is.is;

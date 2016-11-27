@@ -1,7 +1,7 @@
 package com.lancep.war.factory;
 
-import com.lancep.war.domain.WarDeck;
-import com.lancep.war.domain.WarDeckImpl;
+import com.lancep.war.orm.WarDeck;
+import com.lancep.war.orm.WarDeckImpl;
 import com.lancep.war.orm.War;
 
 public class WarFactory {

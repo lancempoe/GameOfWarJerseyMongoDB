@@ -1,8 +1,8 @@
 package com.lancep.war.driver;
 
 import com.lancep.war.client.WarResults;
-import com.lancep.war.domain.Card;
-import com.lancep.war.domain.WarDeck;
+import com.lancep.war.orm.Card;
+import com.lancep.war.orm.WarDeck;
 import com.lancep.war.errorhandling.WarException;
 import com.lancep.war.factory.WarFactory;
 import com.lancep.war.orm.War;

@@ -30,9 +30,9 @@ public class WarResource {
     @POST
     public Response createWarGame(@Context UriInfo uriInfo,
                                   @QueryParam("numberOfSuits") int numberOfSuits,
-                                  @QueryParam("numberOfRank") int numberOfRank) {
-        hasValidPlayParams(numberOfSuits, numberOfRank);
-        String id = warService.create(numberOfSuits, numberOfRank);
+                                  @QueryParam("numberOfRanks") int numberOfRanks) {
+        hasValidPlayParams(numberOfSuits, numberOfRanks);
+        String id = warService.create(numberOfSuits, numberOfRanks);
         UriBuilder builder = uriInfo.getAbsolutePathBuilder();
         builder.path(id);
         return Response

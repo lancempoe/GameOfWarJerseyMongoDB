@@ -1,4 +1,4 @@
-package com.lancep.war.domain;
+package com.lancep.war.orm;
 
 import java.util.List;
 

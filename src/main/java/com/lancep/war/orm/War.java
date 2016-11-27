@@ -1,7 +1,6 @@
 package com.lancep.war.orm;
 
 import com.lancep.config.Collection;
-import com.lancep.war.domain.WarDeck;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 

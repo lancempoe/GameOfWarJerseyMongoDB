@@ -1,4 +1,4 @@
-package com.lancep.war.domain;
+package com.lancep.war.orm;
 
 import org.apache.commons.collections4.CollectionUtils;
 
@@ -12,6 +12,9 @@ public class WarDeckImpl implements WarDeck {
 
     private  ArrayDeque<Card> drawStack;
 
+    public WarDeckImpl() {
+    }
+
     public WarDeckImpl(int numberOfSuits, int numberOfRanks) {
         create(numberOfSuits, numberOfRanks);
         shuffle();
@@ -22,7 +25,7 @@ public class WarDeckImpl implements WarDeck {
         int numberOfCards = numberOfRanks * numberOfRanks;
         drawStack = new ArrayDeque<>(numberOfCards);
         IntStream.range(0,numberOfSuits).forEach(suit -> IntStream.range(0,numberOfRanks).forEach(rank -> {
-            com.lancep.war.domain.Card card = new com.lancep.war.domain.Card(suit, rank);
+            Card card = new Card(suit, rank);
             drawStack.add(card);
         }));
     }

@@ -1,7 +1,5 @@
 package com.lancep.war.orm;
 
-import com.lancep.war.domain.WarDeck;
-import com.lancep.war.domain.WarDeckImpl;
 import org.junit.Test;
 
 import static org.hamcrest.core.Is.is;
