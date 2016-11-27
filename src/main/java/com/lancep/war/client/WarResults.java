@@ -2,36 +2,44 @@ package com.lancep.war.client;
 
 import com.lancep.war.domain.Card;
 
+import java.util.ArrayDeque;
+
 public class WarResults {
 
-    private int totalMoves;
-    private Card player1DrawnCard;
-    private Card player2DrawnCard;
+    private int totalMoveCount;
+    private ArrayDeque<Card> player1DrawnCards = new ArrayDeque<>();
+    private ArrayDeque<Card> player2DrawnCards = new ArrayDeque<>();
     private int player1DeckSize;
     private int player2DeckSize;
 
-    public int getTotalMoves() {
-        return totalMoves;
+    public int getTotalMoveCount() {
+        return totalMoveCount;
     }
 
-    public void setTotalMoves(int totalMoves) {
-        this.totalMoves = totalMoves;
+    public void setTotalMoveCount(int totalMoveCount) {
+        this.totalMoveCount = totalMoveCount;
     }
 
-    public Card getPlayer1DrawnCard() {
-        return player1DrawnCard;
+    public ArrayDeque<Card> getPlayer1DrawnCards() {
+        return player1DrawnCards;
     }
 
-    public void setPlayer1DrawnCard(Card player1DrawnCard) {
-        this.player1DrawnCard = player1DrawnCard;
+    public ArrayDeque<Card> getPlayer2DrawnCards() {
+        return player2DrawnCards;
     }
 
-    public Card getPlayer2DrawnCard() {
-        return player2DrawnCard;
+    public void addPlayer1DrawnCard(Card card) {
+        addDrawnCard(card, player1DrawnCards);
     }
 
-    public void setPlayer2DrawnCard(Card player2DrawnCard) {
-        this.player2DrawnCard = player2DrawnCard;
+    public void addPlayer2DrawnCard(Card card) {
+        addDrawnCard(card, player2DrawnCards);
+    }
+
+    private void addDrawnCard(Card card, ArrayDeque<Card> drawnCards) {
+        if (card != null) {
+            drawnCards.addLast(card);
+        }
     }
 
     public int getPlayer1DeckSize() {

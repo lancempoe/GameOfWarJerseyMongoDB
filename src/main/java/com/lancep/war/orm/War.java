@@ -11,7 +11,7 @@ public class War {
     @Id private String id;
     private WarDeck player1Deck;
     private WarDeck player2Deck;
-    private int moves = 0;
+    private int totalMoveCount = 0;
 
     public String getId() {
         return id;
@@ -37,11 +37,11 @@ public class War {
         this.player2Deck = player2Deck;
     }
 
-    public int getMoves() {
-        return moves;
+    public int getTotalMoveCount() {
+        return totalMoveCount;
     }
 
-    public void setMoves(int moves) {
-        this.moves = moves;
+    public void setTotalMoveCount(int totalMoveCount) {
+        this.totalMoveCount = totalMoveCount;
     }
 }

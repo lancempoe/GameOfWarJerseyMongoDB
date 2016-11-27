@@ -32,4 +32,11 @@ public class WarTest {
         assertThat(subject.getPlayer2Deck(), is(deck));
     }
 
+    @Test
+    public void canGetMoveCount() {
+        int moveCount = 2;
+        subject.setTotalMoveCount(moveCount);
+        assertThat(subject.getTotalMoveCount(), is(moveCount));
+    }
+
 }

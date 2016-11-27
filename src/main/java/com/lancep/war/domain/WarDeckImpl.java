@@ -38,12 +38,14 @@ public class WarDeckImpl implements WarDeck {
 
     @Override
     public Card deal() {
-        return null;
+        return drawStack.pollFirst();
     }
 
     @Override
     public void addCards(List<Card> cards) {
-
+        if (CollectionUtils.isNotEmpty(cards)) {
+            cards.forEach(card -> drawStack.addLast(card));
+        }
     }
 
     @Override
