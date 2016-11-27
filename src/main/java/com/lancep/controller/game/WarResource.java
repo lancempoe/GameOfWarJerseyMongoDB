@@ -41,7 +41,7 @@ public class WarResource {
     }
 
     @Path("play")
-    @GET
+    @POST
     @Produces(MediaType.APPLICATION_JSON)
     public Response quickGame(
             @QueryParam("numberOfSuits") int numberOfSuits,
