@@ -76,7 +76,7 @@ public class WarResource {
     }
 
     @Path("{id}/draw")
-    @GET
+    @POST
     @Produces(MediaType.APPLICATION_JSON)
     public Response draw(@PathParam("id") String id) {
         WarResults warResults = warService.draw(id);
