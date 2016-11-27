@@ -14,7 +14,6 @@ import java.util.stream.Stream;
 public class WarDriver {
 
     private static final Logger logger = Logger.getLogger(WarDriver.class.getName());
-
     public static final int I_DECLARE_WAR_COUNT = 3;
 
     /**
@@ -52,7 +51,8 @@ public class WarDriver {
         if (gameIsNotOver(war)) {
             draw(war, results);
         } else {
-            logger.info(String.format("Game Is Already Over. Final Score: Player1 %s cards, Player 2 %s cards. %i cards drawn",
+            logger.info(String.format(
+                    "Game Is Already Over. Final Score: Player1 %s cards, Player 2 %s cards. %d cards drawn",
                     war.getPlayer1Deck().getSize(),
                     war.getPlayer2Deck().getSize(),
                     war.getTotalMoveCount()));

@@ -1,10 +1,18 @@
 package com.lancep.war.driver;
 
 import com.lancep.war.client.WarResults;
+import com.lancep.war.domain.Card;
+import com.lancep.war.domain.WarDeck;
+import com.lancep.war.domain.WarDeckImpl;
+import com.lancep.war.orm.War;
 import org.junit.Test;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import static org.hamcrest.Matchers.greaterThan;
 import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.nullValue;
 import static org.junit.Assert.assertThat;
 
 public class WarDriverTest {
@@ -48,5 +56,125 @@ public class WarDriverTest {
         assertThat(gameWonOrEndsInTie, is(true));
     }
     
+    @Test
+    public void drawWillAddCardsToWinnersDeck_Player1() {
+        War war = new War();
+        WarDeck player1WarDeck = getWarDeck(1);
+        WarDeck player2WarDeck = getWarDeck(2);
+        war.setPlayer1Deck(player1WarDeck);
+        war.setPlayer2Deck(player2WarDeck);
+
+        WarResults results = subject.draw(war);
+
+        int totalCardsInGame = player1WarDeck.getSize() + player2WarDeck.getSize();
+        assertThat(results.getPlayer1DeckSize(), is(totalCardsInGame));
+    }
+
+    @Test
+    public void drawWillAddCardsToWinnersDeck_Player2() {
+        War war = new War();
+        WarDeck player1WarDeck = getWarDeck(2);
+        WarDeck player2WarDeck = getWarDeck(1);
+        war.setPlayer1Deck(player1WarDeck);
+        war.setPlayer2Deck(player2WarDeck);
+
+        WarResults results = subject.draw(war);
+
+        int totalCardsInGame = player1WarDeck.getSize() + player2WarDeck.getSize();
+        assertThat(results.getPlayer2DeckSize(), is(totalCardsInGame));
+    }
+
+    @Test
+    public void drawWillRemoveCardsFromLosersDeck() {
+        War war = new War();
+        WarDeck player1WarDeck = getWarDeck(1);
+        WarDeck player2WarDeck = getWarDeck(2);
+        war.setPlayer1Deck(player1WarDeck);
+        war.setPlayer2Deck(player2WarDeck);
+
+        WarResults results = subject.draw(war);
+
+        assertThat(results.getPlayer2DeckSize(), is(0));
+    }
+
+    @Test
+    public void drawWillIncrementTheMoveCount() {
+        War war = new War();
+        WarDeck player1WarDeck = getWarDeck(1);
+        WarDeck player2WarDeck = getWarDeck(2);
+        war.setPlayer1Deck(player1WarDeck);
+        war.setPlayer2Deck(player2WarDeck);
+        int totalMoveCount = 3;
+        war.setTotalMoveCount(totalMoveCount);
+
+
+        WarResults results = subject.draw(war);
+
+        assertThat(results.getTotalMoveCount(), is(totalMoveCount+1));
+    }
+
+    @Test
+    public void drawHandlesInvalidWar() {
+        assertThat(subject.draw(null), is(nullValue()));
+    }
+
+    @Test
+    public void drawHandlesAlreadyCompletedGames() {
+        int priorMoveCount = 1;
+        War war = new War();
+        WarDeck player1WarDeck = getWarDeck(1, 2);
+        WarDeck player2WarDeck = getWarDeck();
+        war.setPlayer1Deck(player1WarDeck);
+        war.setPlayer2Deck(player2WarDeck);
+        war.setTotalMoveCount(priorMoveCount);
+
+        WarResults results = subject.draw(war);
+
+        assertThat(results.getTotalMoveCount(), is(priorMoveCount));
+    }
+    
+    @Test
+    public void drawHandlesTie() {
+        int priorMoveCount = 1;
+        War war = new War();
+        int[] cardRanks = {1, 2, 3, 4, 5};
+        WarDeck player1WarDeck = getWarDeck(cardRanks);
+        WarDeck player2WarDeck = getWarDeck(cardRanks);
+        war.setPlayer1Deck(player1WarDeck);
+        war.setPlayer2Deck(player2WarDeck);
+        war.setTotalMoveCount(priorMoveCount);
+
+        WarResults results = subject.draw(war);
+
+        assertThat(results.getPlayer1DeckSize(), is(0));
+        assertThat(results.getPlayer2DeckSize(), is(0));
+    }
+
+    @Test
+    public void drawTotalMoveCountExcludesWars() {
+        int priorMoveCount = 1;
+        War war = new War();
+        int[] cardRanks = {1, 2, 3, 4, 5};
+        WarDeck player1WarDeck = getWarDeck(cardRanks);
+        WarDeck player2WarDeck = getWarDeck(cardRanks);
+        war.setPlayer1Deck(player1WarDeck);
+        war.setPlayer2Deck(player2WarDeck);
+        war.setTotalMoveCount(priorMoveCount);
+
+        WarResults results = subject.draw(war);
+
+        assertThat(results.getTotalMoveCount(), is(2));
+    }
+
+    private WarDeck getWarDeck(int ... ranks) {
+        WarDeck warDeck = new WarDeckImpl(0,0);
+        List<Card> cards = new ArrayList<>();
+        for(int rank: ranks) {
+            cards.add(new Card(rank,rank));
+        }
+        warDeck.addCards(cards);
+        return warDeck;
+    }
+
 
 }
