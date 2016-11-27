@@ -102,6 +102,8 @@ public class WarService {
         WarResults results;
         try {
             results = driver.play(numberOfSuits, numberOfRanks);
+        } catch (WarException e) {
+            throw e;
         } catch (Exception e) {
             throw new WarException(Response.Status.GATEWAY_TIMEOUT);
         }

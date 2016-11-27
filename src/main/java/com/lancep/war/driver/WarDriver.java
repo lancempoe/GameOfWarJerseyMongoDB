@@ -17,7 +17,7 @@ public class WarDriver {
 
     private static final Logger logger = Logger.getLogger(WarDriver.class.getName());
     public static final int I_DECLARE_WAR_COUNT = 3;
-    public static final int MAX_MOVE_COUNT = 10000;
+    public static final int MAX_MOVE_COUNT = 20000;
 
     /**
      * @warning This will play through an entire game of war. As with the game of war,
