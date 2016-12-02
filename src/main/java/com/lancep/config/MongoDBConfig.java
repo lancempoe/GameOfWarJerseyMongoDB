@@ -12,13 +12,12 @@ public class MongoDBConfig {
 
     @Bean
     public MongoDbFactory mongoDbFactory() throws Exception {
-        return new SimpleMongoDbFactory(new MongoClient(), "gametable");
+        return new SimpleMongoDbFactory(new MongoClient(), MongoProperties.GAME_COLLECTION);
     }
 
     @Bean
     public MongoTemplate mongoTemplate() throws Exception {
-        MongoTemplate mongoTemplate = new MongoTemplate(mongoDbFactory());
-        return mongoTemplate;
+        return new MongoTemplate(mongoDbFactory());
     }
 
 }

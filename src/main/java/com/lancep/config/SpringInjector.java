@@ -8,8 +8,8 @@ import org.springframework.context.annotation.Configuration;
  * this this is an example of how you can define what to return.
  *
  *     @Bean
- *     public DarkSkyService getDarkSkyService(){
- *         return new DarkSkyServiceImpl();
+ *     public MyService getMyService(){
+ *         return new MyServiceImpl();
  *     }
  *
  */

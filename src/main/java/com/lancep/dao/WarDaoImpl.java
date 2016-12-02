@@ -12,7 +12,12 @@ import java.util.List;
 @Repository
 public class WarDaoImpl implements WarDao {
 
-    @Autowired private MongoTemplate mongoTemplate;
+    private final MongoTemplate mongoTemplate;
+
+    @Autowired
+    public WarDaoImpl(MongoTemplate mongoTemplate) {
+        this.mongoTemplate = mongoTemplate;
+    }
 
     @Override
     public List<War> findAll() {

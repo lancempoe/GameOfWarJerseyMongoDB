@@ -1,10 +1,10 @@
 package com.lancep.war.orm;
 
-import com.lancep.config.Collection;
+import com.lancep.config.MongoProperties;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-@Document(collection = Collection.WAR)
+@Document(collection = MongoProperties.WAR_DB)
 public class War {
 
     @Id private String id;
