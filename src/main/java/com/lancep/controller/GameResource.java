@@ -9,13 +9,15 @@ import javax.ws.rs.Path;
 @Path("game")
 public class GameResource {
 
-    @Autowired
-    WarResource warResource;
+    private WarResource warResource;
 
     @Path("war")
     public WarResource getWarResource() {
         return warResource;
     }
 
-
+    @Autowired
+    public void setWarResource(WarResource warResource) {
+        this.warResource = warResource;
+    }
 }

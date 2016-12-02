@@ -1,13 +1,12 @@
 package com.lancep.service;
 
-import com.lancep.config.MongoDBConfig;
 import com.lancep.controller.errorhandling.WarException;
+import com.lancep.dao.WarDao;
 import com.lancep.war.client.WarResults;
 import com.lancep.war.driver.WarDriver;
 import com.lancep.war.factory.WarFactory;
 import com.lancep.war.orm.War;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.mongodb.core.MongoOperations;
 import org.springframework.stereotype.Component;
 
 import javax.ws.rs.core.Response;
@@ -17,46 +16,25 @@ import java.util.logging.Logger;
 @Component
 public class WarServiceImpl implements WarService {
     private static final Logger logger = Logger.getLogger( WarService.class.getName() );
-
-    @Autowired
-    private MongoDBConfig mongoConfig;
+    private WarDao warDao;
 
     @Override
     public List<War> getAll() {
-        try {
-            MongoOperations mongoOperation = mongoConfig.mongoTemplate();
-            return mongoOperation.findAll(War.class);
-        } catch (Exception e) {
-            throw new WarException(Response.Status.GATEWAY_TIMEOUT);
-        }
+        return warDao.findAll();
     }
 
     @Override
     public String create(int numberOfSuits, int numberOfRank) {
+        War war = WarFactory.createWar(numberOfSuits, numberOfRank);
+        String id = warDao.save(war);
 
-        try {
-            MongoOperations mongoOperation = mongoConfig.mongoTemplate();
-
-            War war = WarFactory.createWar(numberOfSuits, numberOfRank);
-            mongoOperation.save(war);
-
-            logger.info(String.format("New War Created: %s", war.getId()));
-            return war.getId();
-
-        } catch (Exception e) {
-            throw new WarException(Response.Status.GATEWAY_TIMEOUT);
-        }
+        logger.info(String.format("New War Created: %s", id));
+        return id;
     }
 
     @Override
     public War get(String id) {
-        War war;
-        try {
-            MongoOperations mongoOperation = mongoConfig.mongoTemplate();
-            war = mongoOperation.findById(id, War.class);
-        } catch (Exception e) {
-            throw new WarException(Response.Status.GATEWAY_TIMEOUT);
-        }
+        War war = warDao.findById(id);
         if (war == null) {
             throw new WarException(Response.Status.BAD_REQUEST);
         }
@@ -65,38 +43,22 @@ public class WarServiceImpl implements WarService {
 
     @Override
     public void delete(String id) {
-        War war;
-        MongoOperations mongoOperation;
-        try {
-            mongoOperation = mongoConfig.mongoTemplate();
-            war = mongoOperation.findById(id, War.class);
-        } catch (Exception e) {
-            throw new WarException(Response.Status.GATEWAY_TIMEOUT);
-        }
+        War war = warDao.findById(id);
         if (war == null) {
             throw new WarException(Response.Status.BAD_REQUEST);
         }
-        mongoOperation.remove(war);
+        warDao.delete(war);
     }
 
     @Override
     public WarResults draw(String id) {
-        War war;
-        WarResults results;
-        try {
-            MongoOperations mongoOperation = mongoConfig.mongoTemplate();
-            war = mongoOperation.findById(id, War.class);
+        War war = warDao.findById(id);
 
-            WarDriver driver = new WarDriver();
-            results = driver.draw(war);
+        WarDriver driver = new WarDriver();
+        WarResults results = driver.draw(war);
 
-            mongoOperation.save(war);
-        } catch (Exception e) {
-            throw new WarException(Response.Status.GATEWAY_TIMEOUT);
-        }
-        if (war == null) {
-            throw new WarException(Response.Status.BAD_REQUEST);
-        }
+        warDao.save(war);
+
         return results;
     }
 
@@ -112,5 +74,10 @@ public class WarServiceImpl implements WarService {
             throw new WarException(Response.Status.GATEWAY_TIMEOUT);
         }
         return results;
+    }
+
+    @Autowired
+    public void setWarDao(WarDao warDao) {
+        this.warDao = warDao;
     }
 }
