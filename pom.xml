@@ -11,7 +11,10 @@
     <properties>
         <spring.version>4.0.3.RELEASE</spring.version>
         <jersey.version>2.24</jersey.version>
+        <javax.servlet-api.version>3.1.0</javax.servlet-api.version>
+
         <apache-commons.version>4.1</apache-commons.version>
+
         <mongo-java.version>2.11.1</mongo-java.version>
         <spring-mongo.version>1.2.1.RELEASE</spring-mongo.version>
         <jmockit.version>1.24</jmockit.version>
@@ -78,6 +81,13 @@
             <groupId>org.springframework</groupId>
             <artifactId>spring-tx</artifactId>
             <version>${spring.version}</version>
+        </dependency>
+
+        <!-- Used for the spring initializer class -->
+        <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>javax.servlet-api</artifactId>
+            <version>${javax.servlet-api.version}</version>
         </dependency>
 
         <!-- Spring Data for MongoDB -->

@@ -1,6 +1,6 @@
 package com.lancep.controller.validation;
 
-import com.lancep.war.errorhandling.WarException;
+import com.lancep.controller.errorhandling.WarException;
 import org.junit.Test;
 
 public class WarValidationsTest {

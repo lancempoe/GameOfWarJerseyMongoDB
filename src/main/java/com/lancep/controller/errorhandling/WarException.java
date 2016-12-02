@@ -1,4 +1,4 @@
-package com.lancep.war.errorhandling;
+package com.lancep.controller.errorhandling;
 
 
 import javax.ws.rs.core.Response.Status;

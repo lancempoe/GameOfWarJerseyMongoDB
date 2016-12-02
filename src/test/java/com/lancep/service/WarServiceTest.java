@@ -2,7 +2,7 @@ package com.lancep.service;
 
 import com.lancep.config.MongoDBConfig;
 import com.lancep.war.client.WarResults;
-import com.lancep.war.errorhandling.WarException;
+import com.lancep.controller.errorhandling.WarException;
 import com.lancep.war.factory.WarFactory;
 import com.lancep.war.orm.War;
 import mockit.Expectations;
