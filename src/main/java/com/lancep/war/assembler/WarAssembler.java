@@ -1,10 +1,10 @@
-package com.lancep.war.factory;
+package com.lancep.war.assembler;
 
 import com.lancep.war.orm.WarDeck;
 import com.lancep.war.orm.WarDeckImpl;
 import com.lancep.war.orm.War;
 
-public class WarFactory {
+public class WarAssembler {
 
     public static War createWar(int numberOfSuits, int numberOfRanks) {
         War war = new War();

@@ -4,16 +4,16 @@ import com.lancep.controller.errorhandling.WarException;
 import com.lancep.dao.WarDao;
 import com.lancep.war.client.WarResults;
 import com.lancep.war.driver.WarDriver;
-import com.lancep.war.factory.WarFactory;
+import com.lancep.war.assembler.WarAssembler;
 import com.lancep.war.orm.War;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import javax.ws.rs.core.Response;
 import java.util.List;
 import java.util.logging.Logger;
 
-@Component
+@Service
 public class WarServiceImpl implements WarService {
     private static final Logger logger = Logger.getLogger( WarService.class.getName() );
     private WarDao warDao;
@@ -25,7 +25,7 @@ public class WarServiceImpl implements WarService {
 
     @Override
     public String create(int numberOfSuits, int numberOfRank) {
-        War war = WarFactory.createWar(numberOfSuits, numberOfRank);
+        War war = WarAssembler.createWar(numberOfSuits, numberOfRank);
         String id = warDao.save(war);
 
         logger.info(String.format("New War Created: %s", id));

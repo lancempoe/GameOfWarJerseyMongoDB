@@ -1,4 +1,4 @@
-package com.lancep.war.factory;
+package com.lancep.war.assembler;
 
 import com.lancep.war.orm.War;
 import org.junit.Test;
@@ -7,7 +7,7 @@ import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
 
-public class WarFactoryTest {
+public class WarAssemblerTest {
 
 
     public static final int NUMBER_OF_SUITS = 7;
@@ -15,13 +15,13 @@ public class WarFactoryTest {
 
     @Test
     public void willCreatePlayer1DequesWith52Cards() {
-        assertThat(WarFactory.createWar(NUMBER_OF_SUITS, NUMBER_OF_RANKS).getPlayer1Deck().getSize(),
+        assertThat(WarAssembler.createWar(NUMBER_OF_SUITS, NUMBER_OF_RANKS).getPlayer1Deck().getSize(),
                 is(NUMBER_OF_SUITS*NUMBER_OF_RANKS));
     }
 
     @Test
     public void willCreatePlayer2DequesWith52Cards() {
-        assertThat(WarFactory.createWar(NUMBER_OF_SUITS, NUMBER_OF_RANKS).getPlayer2Deck().getSize(),
+        assertThat(WarAssembler.createWar(NUMBER_OF_SUITS, NUMBER_OF_RANKS).getPlayer2Deck().getSize(),
                 is(NUMBER_OF_SUITS*NUMBER_OF_RANKS));
     }
 
@@ -31,7 +31,7 @@ public class WarFactoryTest {
      */
     @Test
     public void willCreate2DifferentDequesOfCards() {
-        War war = WarFactory.createWar(NUMBER_OF_SUITS, NUMBER_OF_RANKS);
+        War war = WarAssembler.createWar(NUMBER_OF_SUITS, NUMBER_OF_RANKS);
         assertThat(war.getPlayer1Deck(), is(not(war.getPlayer2Deck())));
     }
 

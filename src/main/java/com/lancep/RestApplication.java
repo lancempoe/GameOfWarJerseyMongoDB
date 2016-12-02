@@ -8,7 +8,7 @@ import org.glassfish.jersey.server.ResourceConfig;
 public class RestApplication extends ResourceConfig {
 
     public RestApplication() {
-        // register application resources
+        // register application controllers
         register(HealthResource.class);
         register(GameResource.class);
 

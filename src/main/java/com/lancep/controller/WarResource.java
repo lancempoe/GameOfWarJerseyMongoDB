@@ -4,7 +4,7 @@ import com.lancep.service.WarService;
 import com.lancep.war.client.WarResults;
 import com.lancep.war.orm.War;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Controller;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.*;
@@ -12,7 +12,7 @@ import java.util.List;
 
 import static com.lancep.controller.validation.WarValidations.hasValidPlayParams;
 
-@Component
+@Controller
 public class WarResource {
 
     private WarService warService;

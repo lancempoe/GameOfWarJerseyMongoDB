@@ -1,7 +1,7 @@
 package com.lancep.dao;
 
 import com.lancep.controller.errorhandling.WarException;
-import com.lancep.war.factory.WarFactory;
+import com.lancep.war.assembler.WarAssembler;
 import com.lancep.war.orm.War;
 import mockit.Expectations;
 import mockit.Injectable;
@@ -20,7 +20,7 @@ public class WarDaoImplTest {
     @Tested WarDaoImpl subject;
     @Injectable MongoTemplate template;
 
-    private static final War WAR = WarFactory.createWar(1,1);
+    private static final War WAR = WarAssembler.createWar(1,1);
     private static final String ID = "123";
     private static final List<War> WARS = new ArrayList<>();
 

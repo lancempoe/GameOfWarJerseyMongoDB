@@ -4,7 +4,7 @@ import com.lancep.war.client.WarResults;
 import com.lancep.war.orm.Card;
 import com.lancep.war.orm.WarDeck;
 import com.lancep.controller.errorhandling.WarException;
-import com.lancep.war.factory.WarFactory;
+import com.lancep.war.assembler.WarAssembler;
 import com.lancep.war.orm.War;
 
 import javax.ws.rs.core.Response;
@@ -26,7 +26,7 @@ public class WarDriver {
      * @return results of game of war
      */
     public WarResults play(int numberOfSuits, int numberOfRanks) {
-        War war = WarFactory.createWar(numberOfSuits, numberOfRanks);
+        War war = WarAssembler.createWar(numberOfSuits, numberOfRanks);
         while(gameIsNotOver(war)) {
             draw(war);
         }

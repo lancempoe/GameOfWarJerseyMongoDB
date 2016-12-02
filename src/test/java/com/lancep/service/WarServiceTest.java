@@ -3,7 +3,7 @@ package com.lancep.service;
 import com.lancep.controller.errorhandling.WarException;
 import com.lancep.dao.WarDao;
 import com.lancep.war.client.WarResults;
-import com.lancep.war.factory.WarFactory;
+import com.lancep.war.assembler.WarAssembler;
 import com.lancep.war.orm.War;
 import mockit.Expectations;
 import mockit.Injectable;
@@ -25,7 +25,7 @@ public class WarServiceTest {
 
     private static final int NUMBER_OF_SUITS = 1;
     private static final int NUMBER_OF_RANK = 1;
-    private static final War WAR = WarFactory.createWar(1,1);
+    private static final War WAR = WarAssembler.createWar(1,1);
     private static final String ID = "123";
     private static final List<War> WARS = new ArrayList<>();
 
