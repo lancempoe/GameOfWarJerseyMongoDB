@@ -1,4 +1,4 @@
-package com.lancep.controller.game;
+package com.lancep.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;

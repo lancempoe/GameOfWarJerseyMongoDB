@@ -1,5 +1,7 @@
 package com.lancep.controller.game;
 
+import com.lancep.controller.GameResource;
+import com.lancep.controller.WarResource;
 import mockit.Injectable;
 import mockit.Tested;
 import org.junit.Test;
@@ -9,7 +11,8 @@ import static org.junit.Assert.assertThat;
 
 public class GameResourceTest {
 
-    @Tested GameResource subject;
+    @Tested
+    GameResource subject;
     @Injectable
     WarResource warResource;
 

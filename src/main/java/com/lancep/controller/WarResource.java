@@ -1,4 +1,4 @@
-package com.lancep.controller.game;
+package com.lancep.controller;
 
 import com.lancep.service.WarService;
 import com.lancep.war.client.WarResults;
@@ -15,7 +15,7 @@ import static com.lancep.controller.validation.WarValidations.hasValidPlayParams
 @Component
 public class WarResource {
 
-    @Autowired private WarService warService;
+    private WarService warService;
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
@@ -86,4 +86,8 @@ public class WarResource {
                 .build();
     }
 
+    @Autowired
+    public void setWarService(WarService warService) {
+        this.warService = warService;
+    }
 }

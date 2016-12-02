@@ -1,5 +1,6 @@
 package com.lancep.controller.game;
 
+import com.lancep.controller.WarResource;
 import com.lancep.war.orm.War;
 import com.lancep.service.WarService;
 import mockit.Expectations;

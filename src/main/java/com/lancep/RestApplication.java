@@ -1,7 +1,7 @@
 package com.lancep;
 
 import com.lancep.controller.HealthResource;
-import com.lancep.controller.game.GameResource;
+import com.lancep.controller.GameResource;
 import com.lancep.controller.errorhandling.WarExceptionMapper;
 import org.glassfish.jersey.server.ResourceConfig;
 

@@ -24,7 +24,7 @@ public class WarServiceTest {
     public static final int NUMBER_OF_SUITS = 1;
     public static final int NUMBER_OF_RANK = 1;
 
-    @Tested WarService subject;
+    @Tested WarServiceImpl subject;
     @Injectable MongoDBConfig mongoDBConfig;
     @Injectable MongoTemplate mongoOperation;
 
